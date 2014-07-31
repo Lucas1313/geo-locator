@@ -1,0 +1,69 @@
+header{
+  h1, h2, h3{
+    display:inline-block;
+    width:auto;
+    margin: 20px 20px 20px 60px;
+  }
+  h1{
+    font-size:2.5em;
+  }
+  h2{
+    font-size:2em;
+  }
+  h3{
+    display:block;
+    font-size: 1.5em;
+  }
+}
+#main{
+  .form-wrapper{
+    width:90%;
+    margin:0 auto;
+    display:block; 
+    border: 1px solid black;
+    overflow: hidden;
+    height:auto;
+    padding: 30px; 
+    h4{
+      display: inline-block;
+      width:auto;
+      margin: 0 50px 0 0;
+      font-size: 1em;
+    }
+    .help{
+      background: url(../../img/question_mark.png) no-repeat;
+      background-size: 100%;
+      width: 13px;
+      height: 13px;
+      display: inline-block;
+      margin: 5px 0 0 0;
+      padding: 5px;
+            &:hover{
+        background: url(../../img/question_mark_hover.png) no-repeat;
+        background-size: 100%;
+      }
+      &:active{
+        background: url(../../img/question_mark.png) no-repeat;
+        background-size: 100%;
+      }
+    }
+    .input-wrapper{
+      padding: 5px;
+      border:solid black 1px;
+    }
+    .button{
+      border:solid black 1px;
+      box-shadow: 4px 4px 3px #666;
+      display : inline-block;
+      height:auto;
+      width:20%;
+      font-size: 1em;
+      &:hover{
+        box-shadow: 4px 4px 1px #555;
+      }
+      &:active{
+        box-shadow: 4px 4px 3px #666;
+      }
+    }
+  }
+}
