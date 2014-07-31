@@ -37,7 +37,7 @@ var geolocator = (function() {
             position : new google.maps.LatLng(latitude, longitude),
             map : map
         });
-
+        
     }
 
     /**
@@ -54,16 +54,19 @@ var geolocator = (function() {
         /**
          * @Listener for the help button
          */
-        $('body').on('click', '.help', function() {
+        $('body').on('click', '.help', function(e) {
 
             // set dialog with help
-            $('.help-feedback').html(brain.helpMessage).dialog();
+            $('.help-feedback').html('<span class="help">'+brain.helpMessage+'</span>').dialog({width:400, position: { my: "left top", at: "left bottom", of: e.target}});
+            $('body').trigger('helpRequest',brain.helpMessage);
         });
 
         /**
          * @Listener for the submit button
          */
-        $('body').on('click', '.button.submit', processUrlSubmit)
+        $('body').on('click', '.button.submit', processUrlSubmit);
+
+        return true;
     }
 
     /**
@@ -97,16 +100,16 @@ var geolocator = (function() {
      */
     function processUrlSubmit(e) {
         var valid = false;
-        
+
         // initialize error message
         var error = '';
-        
+
         // grab the website from the view (input)
         var query = $('.locator-input-js').prop('value');
-        
+
         // Validate using regex accepted values are XXXX.XXX
         if (/^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(query)) {
-            
+
             // entry is valid
             valid = true;
         } else {
@@ -115,15 +118,15 @@ var geolocator = (function() {
             // grab error message from the brain
             error = brain.errors.invalidUrl;
         };
-        
-        // test for valid 
+
+        // test for valid
         if (valid == true) {
             // clear any error message in the View
             $('.error-wrapper').html('');
-            
-            // send ajax request 
+
+            // send ajax request
             ajaxLocate(query);
-            
+
         } else {
             // error handling into the view
             $('.error-wrapper').html('<span class="error">' + error + '</span>');
@@ -139,16 +142,17 @@ var geolocator = (function() {
      * @version 1.0
      */
     function processAjaxSuccess(response) {
+        $('body').trigger('map-coordinate-received', response);
         // debugg
         console.log(response);
-        
+
         // the params from the response
         var latitude = response.lat;
         var longitude = response.lon;
-        
+
         // set the map
         initGmap(latitude, longitude);
-
+        
     }
 
     /**
@@ -160,7 +164,7 @@ var geolocator = (function() {
      *
      */
     function processAjaxError(error) {
-        
+
         // hummmmm
         console.table(error);
 
@@ -170,7 +174,7 @@ var geolocator = (function() {
      * @ method initFlowType
      * Purpose: set the font size for responsive/fluid design
      */
-    function initFlowType(){
+    function initFlowType() {
         $('body').flowtype({
 
             fontRatio : 100,
@@ -178,6 +182,9 @@ var geolocator = (function() {
             maxFont : 50
         });
     }
+
+   
+
     /**
      * @return Object
      * purpose: set public functions for the geolocator object
@@ -185,11 +192,10 @@ var geolocator = (function() {
     return {
         initListeners : initListeners,
         ajaxLocate : ajaxLocate,
-        initFlowType : initFlowType
+        initFlowType : initFlowType,
     };
 
 })()
-
 
 /**
  * @Listener Process javascript after the document is ready
@@ -197,12 +203,14 @@ var geolocator = (function() {
  * @version 1.0
  */
 $(document).ready(function() {
-
+    
     // init listeners
     geolocator.initListeners();
     geolocator.initFlowType();
+    
     // set default location
     geolocator.ajaxLocate();
+   
 
 })
 
