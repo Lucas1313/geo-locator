@@ -45,7 +45,7 @@
         <h2>Location, location, location</h2>
         <h3>Where should I go to visit my favorite website, personally?</h3>
     </header>
-    <div id="main" role="main">
+    <section id="main" role="main">
         <div class="help-feedback"></div>
         <div class="form-wrapper">
             <form action="">
@@ -55,10 +55,12 @@
                 <a href="#" class="button submit">Locate in the world</a>
             </form>
         </div>
-        <div id="map-wrapper" style="width:800px; height:400px">
-            
-        </div>
-    </div>
+        <section class="map">
+            <div id="map-wrapper" style="width:80%; height:40em">
+                hello
+            </div>
+        </section>
+    </section>
     <footer>
 
     </footer>
@@ -75,6 +77,7 @@
 
   <!-- scripts concatenated and minified via ant build script-->
   <script defer src="js/plugins.js"></script>
+  <script src="js/libs/flowtype.js"></script> 
   <script defer src="js/script.js"></script>
   <!-- end scripts-->
 

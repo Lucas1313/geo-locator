@@ -1,3 +1,10 @@
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+@import url(http://fonts.googleapis.com/css?family=Oxygen:400,300,700);
+@import 'core/mediaqueries';
+*{
+  font-family: 'Droid Sans', sans-serif;
+  font-family: 'Oxygen', sans-serif;
+}
 header{
   h1, h2, h3{
     display:inline-block;
@@ -6,29 +13,61 @@ header{
   }
   h1{
     font-size:2.5em;
+    @include responsive{
+      display:block;
+      width:100%;
+      text-align:center;
+      font-size: 3.5em;
+      margin: 20px;
+    }
   }
   h2{
     font-size:2em;
+    @include responsive{
+      display:block;
+      width:100%;
+      text-align:center;
+      font-size: 2.5em;
+      margin: 20px;
+    }
   }
   h3{
     display:block;
     font-size: 1.5em;
+    @include responsive{
+      display:block;
+      width:100%;
+      text-align:center;
+      font-size: 1.5em;
+      margin: 20px;
+    }
   }
 }
 #main{
-  .form-wrapper{
+  .form-wrapper, .map{
     width:90%;
-    margin:0 auto;
+    margin:1em auto;
     display:block; 
     border: 1px solid black;
     overflow: hidden;
     height:auto;
-    padding: 30px; 
+    padding: 3%; 
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 6px 6px 6px #bbbbbb;
+    @include responsive{
+      display:block;
+      width:70%;
+      
+    }
     h4{
       display: inline-block;
-      width:auto;
-      margin: 0 50px 0 0;
-      font-size: 1em;
+      width: auto;
+      margin: 0 2em 0 0;
+      font-size: 1.4em;
+      @include tablet{
+        display:block;
+      }
     }
     .help{
       background: url(../../img/question_mark.png) no-repeat;
@@ -49,21 +88,39 @@ header{
     }
     .input-wrapper{
       padding: 5px;
-      border:solid black 1px;
+      display:inline-block;
+      .locator-input-js, span{
+        font-size: 1.5em;
+      }
     }
     .button{
-      border:solid black 1px;
+      border: solid #000 1px;
       box-shadow: 4px 4px 3px #666;
-      display : inline-block;
-      height:auto;
-      width:20%;
-      font-size: 1em;
+      display: inline-block;
+      height: auto;
+      font-size: 1.3em;
+      padding: 7px 10px;
+      margin: 0 20px;border: solid #000 1px;
+      box-shadow: 4px 4px 3px #666;
+      display: inline-block;
+      height: auto;
+      font-size: 1.3em;
+      padding: 7px 10px;
+      margin: 0 20px;
+      color:black;
+      text-decoration: none;
       &:hover{
-        box-shadow: 4px 4px 1px #555;
+        box-shadow: 6px 6px 6px #aaa;
       }
       &:active{
         box-shadow: 4px 4px 3px #666;
       }
+    }
+  }
+  .map{
+    text-align:center;
+    #map-wrapper{
+      margin: 0 auto;
     }
   }
 }

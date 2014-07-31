@@ -167,12 +167,25 @@ var geolocator = (function() {
     }
 
     /**
+     * @ method initFlowType
+     * Purpose: set the font size for responsive/fluid design
+     */
+    function initFlowType(){
+        $('body').flowtype({
+
+            fontRatio : 100,
+            minFont : 10,
+            maxFont : 50
+        });
+    }
+    /**
      * @return Object
      * purpose: set public functions for the geolocator object
      */
     return {
         initListeners : initListeners,
-        ajaxLocate : ajaxLocate
+        ajaxLocate : ajaxLocate,
+        initFlowType : initFlowType
     };
 
 })()
@@ -187,7 +200,7 @@ $(document).ready(function() {
 
     // init listeners
     geolocator.initListeners();
-
+    geolocator.initFlowType();
     // set default location
     geolocator.ajaxLocate();
 

@@ -7,45 +7,99 @@
  * Copyright Luc Martin 2014.  licensed.
  */
 
-/* line 2, ../www/css/sass/screen.scss */
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:400,700);
+@import url(http://fonts.googleapis.com/css?family=Oxygen:400,300,700);
+/* line 4, ../www/css/sass/screen.scss */
+* {
+  font-family: 'Droid Sans', sans-serif;
+  font-family: 'Oxygen', sans-serif;
+}
+
+/* line 9, ../www/css/sass/screen.scss */
 header h1, header h2, header h3 {
   display: inline-block;
   width: auto;
   margin: 20px 20px 20px 60px;
 }
-/* line 7, ../www/css/sass/screen.scss */
+/* line 14, ../www/css/sass/screen.scss */
 header h1 {
   font-size: 2.5em;
 }
-/* line 10, ../www/css/sass/screen.scss */
+@media only screen and (max-width: 600px) {
+  /* line 14, ../www/css/sass/screen.scss */
+  header h1 {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 3.5em;
+    margin: 20px;
+  }
+}
+/* line 24, ../www/css/sass/screen.scss */
 header h2 {
   font-size: 2em;
 }
-/* line 13, ../www/css/sass/screen.scss */
+@media only screen and (max-width: 600px) {
+  /* line 24, ../www/css/sass/screen.scss */
+  header h2 {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 2.5em;
+    margin: 20px;
+  }
+}
+/* line 34, ../www/css/sass/screen.scss */
 header h3 {
   display: block;
   font-size: 1.5em;
 }
+@media only screen and (max-width: 600px) {
+  /* line 34, ../www/css/sass/screen.scss */
+  header h3 {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+    margin: 20px;
+  }
+}
 
-/* line 19, ../www/css/sass/screen.scss */
-#main .form-wrapper {
+/* line 47, ../www/css/sass/screen.scss */
+#main .form-wrapper, #main .map {
   width: 90%;
-  margin: 0 auto;
+  margin: 1em auto;
   display: block;
   border: 1px solid black;
   overflow: hidden;
   height: auto;
-  padding: 30px;
+  padding: 3%;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 6px 6px 6px #bbbbbb;
 }
-/* line 27, ../www/css/sass/screen.scss */
-#main .form-wrapper h4 {
+@media only screen and (max-width: 600px) {
+  /* line 47, ../www/css/sass/screen.scss */
+  #main .form-wrapper, #main .map {
+    display: block;
+    width: 70%;
+  }
+}
+/* line 63, ../www/css/sass/screen.scss */
+#main .form-wrapper h4, #main .map h4 {
   display: inline-block;
   width: auto;
-  margin: 0 50px 0 0;
-  font-size: 1em;
+  margin: 0 2em 0 0;
+  font-size: 1.4em;
 }
-/* line 33, ../www/css/sass/screen.scss */
-#main .form-wrapper .help {
+@media only screen and (min-width: 450px) and (max-width: 600px) {
+  /* line 63, ../www/css/sass/screen.scss */
+  #main .form-wrapper h4, #main .map h4 {
+    display: block;
+  }
+}
+/* line 72, ../www/css/sass/screen.scss */
+#main .form-wrapper .help, #main .map .help {
   background: url(../../img/question_mark.png) no-repeat;
   background-size: 100%;
   width: 13px;
@@ -54,35 +108,57 @@ header h3 {
   margin: 5px 0 0 0;
   padding: 5px;
 }
-/* line 41, ../www/css/sass/screen.scss */
-#main .form-wrapper .help:hover {
+/* line 80, ../www/css/sass/screen.scss */
+#main .form-wrapper .help:hover, #main .map .help:hover {
   background: url(../../img/question_mark_hover.png) no-repeat;
   background-size: 100%;
 }
-/* line 45, ../www/css/sass/screen.scss */
-#main .form-wrapper .help:active {
+/* line 84, ../www/css/sass/screen.scss */
+#main .form-wrapper .help:active, #main .map .help:active {
   background: url(../../img/question_mark.png) no-repeat;
   background-size: 100%;
 }
-/* line 50, ../www/css/sass/screen.scss */
-#main .form-wrapper .input-wrapper {
+/* line 89, ../www/css/sass/screen.scss */
+#main .form-wrapper .input-wrapper, #main .map .input-wrapper {
   padding: 5px;
-  border: solid black 1px;
+  display: inline-block;
 }
-/* line 54, ../www/css/sass/screen.scss */
-#main .form-wrapper .button {
-  border: solid black 1px;
+/* line 92, ../www/css/sass/screen.scss */
+#main .form-wrapper .input-wrapper .locator-input-js, #main .form-wrapper .input-wrapper span, #main .map .input-wrapper .locator-input-js, #main .map .input-wrapper span {
+  font-size: 1.5em;
+}
+/* line 96, ../www/css/sass/screen.scss */
+#main .form-wrapper .button, #main .map .button {
+  border: solid #000 1px;
   box-shadow: 4px 4px 3px #666;
   display: inline-block;
   height: auto;
-  width: 20%;
-  font-size: 1em;
-}
-/* line 61, ../www/css/sass/screen.scss */
-#main .form-wrapper .button:hover {
-  box-shadow: 4px 4px 1px #555;
-}
-/* line 64, ../www/css/sass/screen.scss */
-#main .form-wrapper .button:active {
+  font-size: 1.3em;
+  padding: 7px 10px;
+  margin: 0 20px;
+  border: solid #000 1px;
   box-shadow: 4px 4px 3px #666;
+  display: inline-block;
+  height: auto;
+  font-size: 1.3em;
+  padding: 7px 10px;
+  margin: 0 20px;
+  color: black;
+  text-decoration: none;
+}
+/* line 112, ../www/css/sass/screen.scss */
+#main .form-wrapper .button:hover, #main .map .button:hover {
+  box-shadow: 6px 6px 6px #aaa;
+}
+/* line 115, ../www/css/sass/screen.scss */
+#main .form-wrapper .button:active, #main .map .button:active {
+  box-shadow: 4px 4px 3px #666;
+}
+/* line 120, ../www/css/sass/screen.scss */
+#main .map {
+  text-align: center;
+}
+/* line 122, ../www/css/sass/screen.scss */
+#main .map #map-wrapper {
+  margin: 0 auto;
 }
