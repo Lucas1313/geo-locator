@@ -37,7 +37,7 @@ header h1 {
 }
 /* line 24, ../www/css/sass/screen.scss */
 header h2 {
-  font-size: 2em;
+  font-size: 1.75em;
 }
 @media only screen and (max-width: 600px) {
   /* line 24, ../www/css/sass/screen.scss */
