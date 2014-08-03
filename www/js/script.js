@@ -65,6 +65,7 @@ var geolocator = (function() {
          * @Listener for the submit button
          */
         $('body').on('click', '.button.submit', processUrlSubmit);
+        $('form','.form-wrapper').on('submit', processUrlSubmit);
 
         return true;
     }
@@ -99,6 +100,8 @@ var geolocator = (function() {
      * @params e Object Event
      */
     function processUrlSubmit(e) {
+        debugger
+        e.preventDefault();
         var valid = false;
 
         // initialize error message
