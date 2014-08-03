@@ -100,7 +100,6 @@ var geolocator = (function() {
      * @params e Object Event
      */
     function processUrlSubmit(e) {
-        debugger
         e.preventDefault();
         var valid = false;
 
