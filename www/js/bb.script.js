@@ -51,7 +51,7 @@ var geolocator = (function() {
 
             }
             ;
-            return true;
+            return valid;
         },
     });
     // State Object Initialize default values Uses closure to maintain state if necessary
@@ -93,12 +93,27 @@ var geolocator = (function() {
         render : function() {
             var data = { 'errorMessage' : brain.get('errorMessage') }; 
             var template = _.template($('.error-tmp').html(), data);
-            debugger
+
             this.$el.html(template);
             return this;
         }
     });
-
+    
+    var SubmitView = Backbone.View.extend({
+        el: $('.button.submit'),
+        events:{
+            click: function(e){
+                processUrlSubmit(e)
+            }
+        },
+        initialize : function(options) {
+            // In Backbone 1.1.0, if you want to access passed options in
+            // your view, you will need to save them as follows:
+            this.options = options || {};
+            console.log('init submit view')
+        },
+    })
+    var inpputView = new SubmitView();
 
     /**
      * @method get map
@@ -156,10 +171,10 @@ var geolocator = (function() {
 
         /**
          * @Listener for the submit button
-         */
+         *
         $('body').on('click', '.button.submit', processUrlSubmit);
         $('form','.form-wrapper').on('submit', processUrlSubmit);
-        
+        **/
         
         return true;
     }
@@ -172,6 +187,7 @@ var geolocator = (function() {
      * @version 1.0
      */
     function ajaxLocate(website) {
+        console.log('ajax request')
         website = (website) ? website : '';
         var url = 'http://ip-api.com/json/';
         $.ajax({
@@ -211,21 +227,19 @@ var geolocator = (function() {
         brain.set('searchedUrls', arr);
         // test for valid
 
-        if (!brain.validationError) {
+        if (brain.validationError === true) {
+            
             brain.set('errorMessage', '');
             // clear any error message in the View
             $('.error-wrapper').html('');
 
             // send ajax request
             ajaxLocate(query);
-            return true;
+            
 
         } else {
             brain.set('errorMessage', brain.validationError);
-            // error handling into the view
-
-            //$('.error-wrapper').html('<span class="error">' + brain.validationError + '</span>');
-            //return error;
+            
         }
 
     }
