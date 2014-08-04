@@ -77,10 +77,8 @@ var geolocator = (function() {
     //************************************************************ VIEWS ***********************************************//
     
     var ErrorView = Backbone.View.extend({
-        el : $('.error-wrapper'),
-        tagName : 'span',
+        el : '.error-wrapper',
         className : 'help',
-        template: this.$el.html();cvcv
         events : {
 
         },
@@ -93,8 +91,10 @@ var geolocator = (function() {
 
         // Re-render the title of the todo item.
         render : function() {
-            var data = { 'errortemplate' : brain.get('errorMessage') }; 
-            this.$el.html(_.template("<%= errortemplate %>", this.data));
+            var data = { 'errorMessage' : brain.get('errorMessage') }; 
+            var template = _.template($('.error-tmp').html(), data);
+            debugger
+            this.$el.html(template);
             return this;
         }
     });
