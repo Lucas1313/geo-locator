@@ -4,29 +4,101 @@
 
 var geolocator = (function() {
 
-    var brainModel = Backbone.Model.extend({
+    //################################################## MODELS #####################################//
+
+    var BrainModel = Backbone.Model.extend({
         initialize : function() {
             console.log('This model has been initialized.');
             this.on('change', function() {
                 console.log('- Values for this model have changed.');
             });
+            this.on('change:searchedUrls', function(e) {
+                console.log('Brain has changed')
+            })
+            this.on('change:errorMessage', function(e) {
+                console.log('error has changed');
+                var error = new ErrorView();
+                error.render();
+            })
         },
-        validate : function() {
-            console.log('validate')
+        
+        validate : function(attrs) {
+
+            var query = attrs.activeUrl;
+
+            console.log('validate');
+            var valid = false;
+
+            // initialize error message
+            var error = '';
+
+            if (!attrs.activeUrl) {
+                // grab error message from the brain
+                return error = brain.get('errors').noData;
+                valid = false;
+            }
+
+            // Validate using regex accepted values are XXXX.XXX
+            else if (/^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(query)) {
+
+                // entry is valid
+                valid = true;
+            } else {
+                // not valid set error message
+                valid = false;
+                // grab error message from the brain
+                return error = brain.get('errors').invalidUrl;
+
+            }
+            ;
+            return true;
         },
     });
     // State Object Initialize default values Uses closure to maintain state if necessary
-    var brain = new brainModel({
+    var brain = new BrainModel({
+        'activeUrl' : '',
         'searchedUrls' : [],
         'acceptableUrls' : [], // do we need to restrict the input
+        'errorMessage' : '',
         'helpMessage' : 'Please enter a web address without the http://, acceptable values could be "google.com" or "linkedin.com"', // customer help
         'errors' : {
             'invalidUrl' : 'The text you entered is not a valid URL, please make sure that the format is correct.', // invalid url error
-            'invalidSite' : 'Unfortunately we don\'t provide location services for this website.' // invalide site (if there is restricted sites)
+            'invalidSite' : 'Unfortunately we don\'t provide location services for this website.', // invalide site (if there is restricted sites)
+            'noData' : 'Please tell us the website you would like to lookup on the world map.'
+        },
+        events: {change: function(){
+                alert()
+            }
         }
     });
     console.log(JSON.stringify(brain));
     console.log(brain.get('helpMessage'));
+
+    //************************************************************ VIEWS ***********************************************//
+    
+    var ErrorView = Backbone.View.extend({
+        el : $('.error-wrapper'),
+        tagName : 'span',
+        className : 'help',
+        template: this.$el.html();cvcv
+        events : {
+
+        },
+
+        initialize : function(options) {
+            // In Backbone 1.1.0, if you want to access passed options in
+            // your view, you will need to save them as follows:
+            this.options = options || {};
+        },
+
+        // Re-render the title of the todo item.
+        render : function() {
+            var data = { 'errortemplate' : brain.get('errorMessage') }; 
+            this.$el.html(_.template("<%= errortemplate %>", this.data));
+            return this;
+        }
+    });
+
 
     /**
      * @method get map
@@ -86,10 +158,9 @@ var geolocator = (function() {
          * @Listener for the submit button
          */
         $('body').on('click', '.button.submit', processUrlSubmit);
-
-        brain.on('change:searchedUrls', function() {
-            console.log('Brain has changed')
-        })
+        $('form','.form-wrapper').on('submit', processUrlSubmit);
+        
+        
         return true;
     }
 
@@ -123,51 +194,40 @@ var geolocator = (function() {
      * @params e Object Event
      */
     function processUrlSubmit(e) {
-        var valid = false;
-
-        // initialize error message
-        var error = '';
-
+        e.preventDefault();
         // grab the website from the view (input)
         var query = $('.locator-input-js').prop('value');
 
-        // Validate using regex accepted values are XXXX.XXX
-        if (/^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(query)) {
+        // clone array using underscore
+        var arr = _.clone(brain.get('searchedUrls'));
 
-            // entry is valid
-            valid = true;
-        } else {
-            // not valid set error message
-            valid = false;
-            // grab error message from the brain
-            error = brain.get('errors').invalidUrl;
-        };
+        // push new data
+        arr.push(query);
 
+        brain.set('activeUrl', query, {
+            validate : true
+        });
+        //set data to model
+        brain.set('searchedUrls', arr);
         // test for valid
-        if (valid == true) {
 
+        if (!brain.validationError) {
+            brain.set('errorMessage', '');
             // clear any error message in the View
             $('.error-wrapper').html('');
 
-            // clone array using underscore
-            var arr = _.clone(brain.get('searchedUrls'));
-
-            // push new data
-            arr.push(query);
-
-            //set data to model
-            brain.set({
-                'searchedUrls' : arr,
-                validate : true
-            })
-
             // send ajax request
             ajaxLocate(query);
+            return true;
 
         } else {
+            brain.set('errorMessage', brain.validationError);
             // error handling into the view
-            $('.error-wrapper').html('<span class="error">' + error + '</span>');
+
+            //$('.error-wrapper').html('<span class="error">' + brain.validationError + '</span>');
+            //return error;
         }
+
     }
 
     /**
