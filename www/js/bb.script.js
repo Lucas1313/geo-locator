@@ -63,7 +63,7 @@ var geolocator = (function() {
         'helpMessage' : 'Please enter a web address without the http://, acceptable values could be "google.com" or "linkedin.com"', // customer help
         'errors' : {
             'invalidUrl' : 'The text you entered is not a valid URL, please make sure that the format is correct.', // invalid url error
-            'invalidSite' : 'Unfortunately we don\'t provide location services for this website.', // invalide site (if there is restricted sites)
+            'invalidSite' : 'Unfortunately we don\'t provide location services for this website. Falling back to your server location.', // invalid site (if there is restricted sites)
             'noData' : 'Please tell us the website you would like to lookup on the world map.'
         },
         events: {change: function(){
@@ -113,8 +113,44 @@ var geolocator = (function() {
             console.log('init submit view')
         },
     })
-    var inpputView = new SubmitView();
+    var submitView = new SubmitView();
+    
+    var InputView = Backbone.View.extend({
+        el : $('.locator-input-js'),
+        events : {
+            keypress : function(e){
+                console.log('keypress ',e.charCode)
+            },
+            focus: function(){
+                
+            }
+        },
+        initialize : function(options) {
+            // In Backbone 1.1.0, if you want to access passed options in
+            // your view, you will need to save them as follows:
+            this.options = options || {};
+            console.log('init input view')
+        },
+    });
+    var inputView = new InputView();
 
+    //************************************************************ ROUTER ***********************************************//
+    
+    var LocationRouter = Backbone.Router.extend({
+        routes : {
+            'location/:site' : 'getLocation'
+        },
+        'getLocation' : function(location){
+            console.log(location)
+            $('.locator-input-js').prop('value',location);
+            submitView.$el.trigger('click');
+        }
+    });
+    var locationRouter = new LocationRouter();
+    Backbone.history.start();
+    
+    
+//************************************************************ CONTROLER ***********************************************//
     /**
      * @method get map
      * purpose: call Gmap api generates map and add a pointer
@@ -187,7 +223,7 @@ var geolocator = (function() {
      * @version 1.0
      */
     function ajaxLocate(website) {
-        console.log('ajax request')
+        console.log('ajax request');
         website = (website) ? website : '';
         var url = 'http://ip-api.com/json/';
         $.ajax({
@@ -256,6 +292,11 @@ var geolocator = (function() {
         $('body').trigger('map-coordinate-received', response);
         // debugg
         console.log(response);
+        
+        if(response.message === 'invalid query'){
+            brain.set('errorMessage', brain.get('errors').invalidSite);
+            ajaxLocate();
+        }
 
         // the params from the response
         var latitude = response.lat;
