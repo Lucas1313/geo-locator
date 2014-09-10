@@ -6,15 +6,18 @@ var serverUrl = "127.0.0.1";
 var http = require("http");
 var path = require("path"); 
 var fs = require("fs");     
-
+var xtraPath = '';
 var server = http.createServer(function(req, res) {
 
   var filename = req.url;
-  if(filename == null || filename == "/") { 
-    filename = "/index.html" 
-  };
+  console.log('The filename is ' + filename)
+  console.log(filename.indexOf('.'))
+  if(filename == null || filename == "/" || filename.indexOf('.') === -1) { 
+    xtraPath = '/'+filename;
+    filename = xtraPath+"/index.html" 
+  }
   var localPath = path.join(__dirname, filename);
-
+  console.log(__dirname + ' is the __dirname')
   var validExtensions = {
     ".html" : "text/html",      
     ".js": "application/javascript", 
@@ -22,7 +25,8 @@ var server = http.createServer(function(req, res) {
     ".txt": "text/plain",
     ".jpg": "image/jpeg",
     ".gif": "image/gif",
-    ".png": "image/png"
+    ".png": "image/png",
+    ".ico": "image/ico"
   };
   var ext = path.extname(filename);
   var mimeType = validExtensions[ext];
