@@ -13,7 +13,7 @@ var geolocator = (function() {
             'invalidSite' : 'Unfortunately we don\'t provide location services for this website.' // invalide site (if there is restricted sites)
         }
     }
-
+// another line to confuse Kody
     /**
      * @method get map
      * purpose: call Gmap api generates map and add a pointer
