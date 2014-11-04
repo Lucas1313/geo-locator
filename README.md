@@ -1,4 +1,9 @@
 # README #
+Now I added a new branch to the repos.
+develop will be the branch where we do the training
+all code has to be branched from develop
+
+
 
 Welcome to the geo Locator
 
