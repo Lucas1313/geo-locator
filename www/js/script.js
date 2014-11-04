@@ -12,7 +12,7 @@ var geolocator = (function() {
             'invalidUrl' : 'The text you entered is not a valid URL, please make sure that the format is correct.', // invalid url error
             'invalidSite' : 'Unfortunately we don\'t provide location services for this website.' // invalide site (if there is restricted sites)
         }
-    }
+    };
 
     /**
      * @method get map
@@ -197,7 +197,7 @@ var geolocator = (function() {
         initFlowType : initFlowType,
     };
 
-})()
+})();
 
 /**
  * @Listener Process javascript after the document is ready
@@ -214,5 +214,5 @@ $(document).ready(function() {
     geolocator.ajaxLocate();
    
 
-})
+});
 

@@ -13,13 +13,13 @@ var geolocator = (function() {
                 console.log('- Values for this model have changed.');
             });
             this.on('change:searchedUrls', function(e) {
-                console.log('Brain has changed')
-            })
+                console.log('Brain has changed');
+            });
             this.on('change:errorMessage', function(e) {
                 console.log('error has changed');
                 var error = new ErrorView();
                 error.render();
-            })
+            });
         },
         
         validate : function(attrs) {
@@ -112,7 +112,7 @@ var geolocator = (function() {
             this.options = options || {};
             console.log('init submit view')
         },
-    })
+    });
     var submitView = new SubmitView();
     
     var InputView = Backbone.View.extend({
@@ -345,7 +345,7 @@ var geolocator = (function() {
         initFlowType : initFlowType,
     };
 
-})()
+})();
 
 /**
  * @Listener Process javascript after the document is ready
@@ -361,5 +361,5 @@ $(document).ready(function() {
     // set default location
     geolocator.ajaxLocate();
 
-})
+});
 
