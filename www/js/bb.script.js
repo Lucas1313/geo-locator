@@ -13,7 +13,7 @@ var geolocator = (function() {
                 console.log('- Values for this model have changed.');
             });
             this.on('change:searchedUrls', function(e) {
-                console.log('Brain has changed')
+                console.log('Brain has changed');
             });
             this.on('change:errorMessage', function(e) {
                 console.log('error has changed');
